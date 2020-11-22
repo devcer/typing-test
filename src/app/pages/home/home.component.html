@@ -1,4 +1,8 @@
-<mat-tab-group mat-align-tabs="center"  [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="selectedTabChange($event.index)">
+<mat-tab-group
+  mat-align-tabs="center"
+  [(selectedIndex)]="selectedTabIndex"
+  (selectedTabChange)="selectedTabChange($event.index)"
+>
   <mat-tab label="1 minute"></mat-tab>
   <mat-tab label="3 minutes"></mat-tab>
   <mat-tab label="5 minutes"></mat-tab>
@@ -8,7 +12,28 @@
 </div>
 <div>
   <!-- Timer -->
+  <div>
+    <countdown
+      #countdown
+      [config]="config"
+      (event)="handleEvent($event)"
+    ></countdown>
+  </div>
   <!-- Score -->
+  <p>Score: {{score}}</p>
   <!-- Text -->
   <!-- Input box -->
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Let's take the test</mat-label>
+      <textarea
+        matInput
+        placeholder="Start Typing"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="3"
+        cdkAutosizeMaxRows="3"
+        (change)="onStartTyping($event)"
+      ></textarea>
+    </mat-form-field>
+  </div>
 </div>
