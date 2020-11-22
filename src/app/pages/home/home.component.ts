@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.selectedTabIndex = 0;
   }
-  selectedTabChange(index: any) {
+  selectedTabChange(index: any): void {
   }
 }
