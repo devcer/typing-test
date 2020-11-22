@@ -1,0 +1,14 @@
+version = 1
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  environment = [
+    "browser",
+    "jasmine"
+  ]
+  plugins = ["angular"]
+  style_guide = "airbnb"
+  dialect = "typescript"
