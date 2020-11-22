@@ -5,10 +5,10 @@ name = "javascript"
 enabled = true
 
   [analyzers.meta]
-  plugins = ["angular"]
   environment = [
     "browser",
     "jasmine"
   ]
+  plugins = ["angular"]
   style_guide = "airbnb"
   dialect = "typescript"
