@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+}
+
+.typing-form {
+  min-width: 500px;
+  width: 100%;
+}
+
+.typing-full-width {
+  width: 100%;
+}
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px;
+}

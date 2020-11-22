@@ -3,16 +3,21 @@
   [(selectedIndex)]="selectedTabIndex"
   (selectedTabChange)="selectedTabChange($event.index)"
 >
-  <mat-tab label="1 minute"></mat-tab>
-  <mat-tab label="3 minutes"></mat-tab>
-  <mat-tab label="5 minutes"></mat-tab>
-</mat-tab-group>
-<div>
-  <button mat-raised-button color="accent">Start Typing Test</button>
+  <mat-tab
+    *ngFor="let time of timeSetList"
+    label="{{ time + (time === 1 ? ' minute' : ' minutes') }}"
+  ></mat-tab
+></mat-tab-group>
+
+<div class="container" *ngIf="showStartButton">
+  <button mat-raised-button color="accent" (click)="startTypingTest()">
+    Start Typing Test
+  </button>
 </div>
-<div>
+<div class="container" *ngIf="!showStartButton">
   <!-- Timer -->
-  <div>
+  <div class="timer-container">
+    <p>TIME LEFT</p>
     <countdown
       #countdown
       [config]="config"
@@ -20,20 +25,31 @@
     ></countdown>
   </div>
   <!-- Score -->
-  <p>Score: {{score}}</p>
+  <p>Score: {{ score }}</p>
   <!-- Text -->
+  <div class="typing-paragraph">
+    <span
+      *ngFor="let text of stringArr; let i = index"
+      [class.active]="i === currentWordIndex"
+      >{{ text }}</span
+    >
+  </div>
   <!-- Input box -->
   <div>
-    <mat-form-field class="example-full-width">
-      <mat-label>Let's take the test</mat-label>
-      <textarea
-        matInput
-        placeholder="Start Typing"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="3"
-        cdkAutosizeMaxRows="3"
-        (change)="onStartTyping($event)"
-      ></textarea>
-    </mat-form-field>
+    <form class="typing-form">
+      <mat-form-field class="typing-full-width">
+        <mat-label>Let's take the test</mat-label>
+        <textarea
+          matInput
+          placeholder="Start Typing"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="3"
+          (change)="onStartTyping($event)"
+          (focus)="startTimer()"
+          (keyup)="onInputKeyUp($event)"
+        ></textarea>
+      </mat-form-field>
+    </form>
   </div>
 </div>
