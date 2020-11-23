@@ -38,14 +38,14 @@
   <div>
     <form class="typing-form">
       <mat-form-field class="typing-full-width">
-        <mat-label>Let's take the test</mat-label>
+        <mat-label>Click here and Start typing</mat-label>
         <textarea
           matInput
+          [formControl]="typedText"
           placeholder="Start Typing"
           cdkTextareaAutosize
           cdkAutosizeMinRows="3"
           cdkAutosizeMaxRows="3"
-          (change)="onStartTyping($event)"
           (focus)="startTimer()"
           (keydown)="onInputKeyDown($event)"
         ></textarea>

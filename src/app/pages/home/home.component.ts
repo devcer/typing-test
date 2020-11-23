@@ -10,6 +10,8 @@ import {
   CountdownEvent,
 } from 'ngx-countdown';
 import { paragraph } from 'src/assets/DummyData';
+import { FormControl } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
   currentWord = '';
   currentTypingWord = '';
   spaceKeyEntered = true;
+  typedText = new FormControl('');
   constructor() {}
 
   ngOnInit(): void {
@@ -49,50 +52,60 @@ export class HomeComponent implements OnInit {
     this.showStartButton = true;
   }
   handleEvent(ev: CountdownEvent): void {
-    // ev.action === done
-    // disable input box
-    // debugger;
+    const isTimerDone = ev.action === 'done';
+    if (isTimerDone) {
+      this.typedText.disable();
+      const score = this.calculateScore();
+      setTimeout(() => {
+        this.showAlert(score);
+      }, 1000);
+    }
   }
-  onStartTyping(ev: Event): void {}
   startTimer(): void {
     this.countdown.begin();
   }
   startTypingTest(): void {
     this.showStartButton = false;
   }
+  calculateScore(): number {
+    const inputText = this.typedText.value;
+    let score = 0;
+    inputText.split(' ').forEach((word: string, index: number) => {
+      const expectedWord = this.stringArr[index].trim();
+      const didWordsMatch = expectedWord === word;
+      console.log(
+        `expectedWord: ${expectedWord} realWord: ${word} didWordsMatch: ${didWordsMatch}`
+      );
+      if (didWordsMatch) {
+        score += 10;
+      } else {
+        score -= 10;
+      }
+    });
+    return score;
+  }
   onInputKeyDown(ev: KeyboardEvent): void {
-    const keycode = ev.code;
-    const isSpaceKey = keycode === 'Space';
-    const isShiftKey = keycode === 'Shift';
-    const isDeleteKey = keycode === 'Backspace';
-    if (isSpaceKey) {
-      this.spaceKeyEntered = !this.spaceKeyEntered;
-    }
-    const isTypingWordEmpty = this.currentTypingWord.length === 0;
+    const isSpaceKey = ev.code === 'Space';
+    const isDeleteKey = ev.code === 'Backspace';
     if (isDeleteKey) {
+      // Don't allow backspace key
       ev.preventDefault();
       ev.stopPropagation();
+    } else if (isSpaceKey) {
+      // if Space key then highlight the next word
+      this.currentWordIndex += 1;
     }
-    if (!isShiftKey && !isDeleteKey) {
-      // if (this.spaceKeyEntered) {
-      //   // start preparing word
-      //   this.currentTypingWord = this.currentTypingWord.concat(ev.key);
-      // }
-      if (isSpaceKey && !isTypingWordEmpty) {
-        // end of word
-        const expectedWord = this.stringArr[this.currentWordIndex].trim();
-        const realWord = this.currentTypingWord;
-        expectedWord === realWord ? (this.score += 10) : (this.score -= 5);
-        this.currentWordIndex += 1;
-        this.currentTypingWord = '';
-        console.log(expectedWord, ' ', realWord);
-      } else {
-        this.currentTypingWord = this.currentTypingWord.concat(ev.key);
-      }
-      // if (!this.spaceKeyEntered && isTypingWordEmpty) {
-      //   // first word
-      //   this.currentTypingWord = this.currentTypingWord.concat(ev.key);
-      // }
-    }
+  }
+  resetTest(): void {
+    this.showStartButton = true;
+    this.typedText.enable();
+    this.typedText.reset();
+    this.score = 0;
+    this.currentWordIndex = 0;
+  }
+  showAlert(score: number): void {
+    Swal.fire('Time is Up', `Your score is ${score}`, 'success').then(() => {
+      this.resetTest();
+    });
   }
 }
