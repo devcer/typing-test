@@ -25,11 +25,12 @@
     ></countdown>
   </div>
   <!-- Score -->
-  <p>Score: {{ score }}</p>
+  <!-- <p>Score: {{ score }}</p> -->
   <!-- Text -->
   <div class="typing-paragraph">
     <span
       *ngFor="let text of stringArr; let i = index"
+      [class.shaded]="i < currentWordIndex"
       [class.active]="i === currentWordIndex"
       >{{ text }}</span
     >

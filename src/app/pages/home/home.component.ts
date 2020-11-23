@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
     });
     this.currentWord = this.stringArr[0];
   }
+
   selectedTabChange(index: any): void {
     this.config.leftTime = this.timeSetList[index] * 60;
     this.showStartButton = true;

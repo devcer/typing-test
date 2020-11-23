@@ -6,8 +6,18 @@
 }
 
 .typing-form {
-  min-width: 500px;
+  min-width: 700px;
   width: 100%;
+}
+
+.typing-paragraph {
+  max-width: 700px;
+  width: 100%;
+  overflow-y: scroll;
+  height: 100px;
+  background-color: white;
+  color: #000;
+  padding: 15px;
 }
 
 .typing-full-width {
@@ -22,5 +32,8 @@
 }
 
 span.active {
-  color: #0f0;
+  color: #69f0ae;
+}
+span.shaded {
+  color: #d8d8d8;
 }
