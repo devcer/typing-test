@@ -47,7 +47,7 @@
           cdkAutosizeMaxRows="3"
           (change)="onStartTyping($event)"
           (focus)="startTimer()"
-          (keyup)="onInputKeyUp($event)"
+          (keydown)="onInputKeyDown($event)"
         ></textarea>
       </mat-form-field>
     </form>

@@ -1,4 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   CountdownComponent,
   CountdownConfig,
@@ -10,6 +15,7 @@ import { paragraph } from 'src/assets/DummyData';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
   selectedTabIndex = 0;
@@ -25,6 +31,9 @@ export class HomeComponent implements OnInit {
   stringArr: string[] = [];
   showStartButton = true;
   currentWordIndex = 0;
+  currentWord = '';
+  currentTypingWord = '';
+  spaceKeyEntered = true;
   constructor() {}
 
   ngOnInit(): void {
@@ -33,6 +42,7 @@ export class HomeComponent implements OnInit {
     paragraph.split(' ').forEach((text) => {
       this.stringArr.push(`${text} `);
     });
+    this.currentWord = this.stringArr[0];
   }
   selectedTabChange(index: any): void {
     this.config.leftTime = this.timeSetList[index] * 60;
@@ -50,10 +60,39 @@ export class HomeComponent implements OnInit {
   startTypingTest(): void {
     this.showStartButton = false;
   }
-  onInputKeyUp(ev: KeyboardEvent): void {
+  onInputKeyDown(ev: KeyboardEvent): void {
     const keycode = ev.code;
-    if (keycode === 'Space') {
-    } else {
+    const isSpaceKey = keycode === 'Space';
+    const isShiftKey = keycode === 'Shift';
+    const isDeleteKey = keycode === 'Backspace';
+    if (isSpaceKey) {
+      this.spaceKeyEntered = !this.spaceKeyEntered;
+    }
+    const isTypingWordEmpty = this.currentTypingWord.length === 0;
+    if (isDeleteKey) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    if (!isShiftKey && !isDeleteKey) {
+      // if (this.spaceKeyEntered) {
+      //   // start preparing word
+      //   this.currentTypingWord = this.currentTypingWord.concat(ev.key);
+      // }
+      if (isSpaceKey && !isTypingWordEmpty) {
+        // end of word
+        const expectedWord = this.stringArr[this.currentWordIndex].trim();
+        const realWord = this.currentTypingWord;
+        expectedWord === realWord ? (this.score += 10) : (this.score -= 5);
+        this.currentWordIndex += 1;
+        this.currentTypingWord = '';
+        console.log(expectedWord, ' ', realWord);
+      } else {
+        this.currentTypingWord = this.currentTypingWord.concat(ev.key);
+      }
+      // if (!this.spaceKeyEntered && isTypingWordEmpty) {
+      //   // first word
+      //   this.currentTypingWord = this.currentTypingWord.concat(ev.key);
+      // }
     }
   }
 }

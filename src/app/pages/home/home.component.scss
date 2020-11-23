@@ -15,8 +15,12 @@
 }
 
 .timer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+}
+
+span.active {
+  color: #0f0;
 }
