@@ -2,6 +2,7 @@
   mat-align-tabs="center"
   [(selectedIndex)]="selectedTabIndex"
   (selectedTabChange)="selectedTabChange($event.index)"
+  *ngIf="showStartButton"
 >
   <mat-tab
     *ngFor="let time of timeSetList"
@@ -24,10 +25,8 @@
       (event)="handleEvent($event)"
     ></countdown>
   </div>
-  <!-- Score -->
-  <!-- <p>Score: {{ score }}</p> -->
   <!-- Text -->
-  <div class="typing-paragraph">
+  <div class="typing-paragraph" id="typing-paragraph">
     <span
       *ngFor="let text of stringArr; let i = index"
       [class.shaded]="i < currentWordIndex"
@@ -39,7 +38,7 @@
   <div>
     <form class="typing-form">
       <mat-form-field class="typing-full-width">
-        <mat-label>Click here and Start typing</mat-label>
+        <mat-label>Click here and Start typing to Start the test</mat-label>
         <textarea
           matInput
           [formControl]="typedText"
@@ -52,5 +51,8 @@
         ></textarea>
       </mat-form-field>
     </form>
+    <button mat-raised-button color="accent" class="float-right" (click)="resetTest()">
+      Cancel
+    </button>
   </div>
 </div>

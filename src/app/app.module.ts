@@ -31,7 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     CountdownModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

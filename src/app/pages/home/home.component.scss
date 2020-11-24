@@ -18,6 +18,8 @@
   background-color: white;
   color: #000;
   padding: 15px;
+  border-radius: 15px;
+  margin: 15px;
 }
 
 .typing-full-width {
@@ -36,4 +38,12 @@ span.active {
 }
 span.shaded {
   color: #d8d8d8;
+}
+
+.float-right {
+  float: right;
+}
+
+.count-down {
+  font-size: 48px;
 }

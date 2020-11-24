@@ -33,21 +33,20 @@ export class HomeComponent implements OnInit {
   stringArr: string[] = [];
   showStartButton = true;
   currentWordIndex = 0;
-  currentWord = '';
   currentTypingWord = '';
   spaceKeyEntered = true;
   typedText = new FormControl('');
+  paragraphElements: any = [];
   constructor() {}
 
   ngOnInit(): void {
-    // this.selectedTabIndex = 0;
-    // this.countdown.begin();
-    paragraph.split(' ').forEach((text) => {
+    this.constructStringArr(paragraph);
+  }
+  constructStringArr(paragraphStr: string): void {
+    paragraphStr.split(' ').forEach((text) => {
       this.stringArr.push(`${text} `);
     });
-    this.currentWord = this.stringArr[0];
   }
-
   selectedTabChange(index: any): void {
     this.config.leftTime = this.timeSetList[index] * 60;
     this.showStartButton = true;
@@ -63,6 +62,9 @@ export class HomeComponent implements OnInit {
     }
   }
   startTimer(): void {
+    this.paragraphElements = document
+      .getElementById('typing-paragraph')
+      ?.getElementsByTagName('span');
     this.countdown.begin();
   }
   startTypingTest(): void {
@@ -95,6 +97,14 @@ export class HomeComponent implements OnInit {
     } else if (isSpaceKey) {
       // if Space key then highlight the next word
       this.currentWordIndex += 1;
+      this.paragraphElements[this.currentWordIndex].scrollIntoView({
+        behaviour: 'smooth',
+        block: 'center',
+      });
+    }
+    // if there are fewer than 50 new words then repeat the words again.
+    if (this.paragraphElements.length - this.currentWordIndex < 50) {
+      this.constructStringArr(paragraph);
     }
   }
   resetTest(): void {
@@ -103,6 +113,8 @@ export class HomeComponent implements OnInit {
     this.typedText.reset();
     this.score = 0;
     this.currentWordIndex = 0;
+    this.stringArr = [];
+    this.constructStringArr(paragraph);
   }
   showAlert(score: number): void {
     Swal.fire('Time is Up', `Your score is ${score}`, 'success').then(() => {
