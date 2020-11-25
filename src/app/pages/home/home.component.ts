@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   spaceKeyEntered = true;
   typedText = new FormControl('');
   paragraphElements: any = [];
-  constructor() {}
 
   ngOnInit(): void {
     this.constructStringArr(paragraph);
@@ -47,7 +46,7 @@ export class HomeComponent implements OnInit {
       this.stringArr.push(`${text} `);
     });
   }
-  selectedTabChange(index: any): void {
+  selectedTabChange(index: number): void {
     this.config.leftTime = this.timeSetList[index] * 60;
     this.showStartButton = true;
   }
