@@ -76,9 +76,10 @@ export class HomeComponent implements OnInit {
     inputText.split(' ').forEach((word: string, index: number) => {
       const expectedWord = this.stringArr[index].trim();
       const didWordsMatch = expectedWord === word;
-      console.log(
-        `expectedWord: ${expectedWord} realWord: ${word} didWordsMatch: ${didWordsMatch}`
-      );
+      // Uncomment for logging purpose
+      // console.log(
+      //   `expectedWord: ${expectedWord} realWord: ${word} didWordsMatch: ${didWordsMatch}`
+      // );
       if (didWordsMatch) {
         score += 10;
       } else {

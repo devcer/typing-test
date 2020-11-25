@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSpanOfStringsModule } from 'ngx-span-of-strings';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -32,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CountdownModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpanOfStringsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -16,7 +16,7 @@
   </button>
 </div>
 <div class="container" *ngIf="!showStartButton">
-  <!-- Timer -->
+  <!-- start: Timer -->
   <div class="timer-container">
     <p>TIME LEFT</p>
     <countdown
@@ -25,16 +25,16 @@
       (event)="handleEvent($event)"
     ></countdown>
   </div>
-  <!-- Text -->
-  <div class="typing-paragraph" id="typing-paragraph">
-    <span
-      *ngFor="let text of stringArr; let i = index"
-      [class.shaded]="i < currentWordIndex"
-      [class.active]="i === currentWordIndex"
-      >{{ text }}</span
-    >
-  </div>
-  <!-- Input box -->
+  <!-- end: Timer -->
+
+  <!-- start: Text -->
+  <lib-ngx-span-of-strings
+    [stringArr]="stringArr"
+    [currentWordIndex]="currentWordIndex"
+  ></lib-ngx-span-of-strings>
+  <!-- end: Text -->
+
+  <!-- start: Input box -->
   <div>
     <form class="typing-form">
       <mat-form-field class="typing-full-width">
@@ -51,8 +51,14 @@
         ></textarea>
       </mat-form-field>
     </form>
-    <button mat-raised-button color="accent" class="float-right" (click)="resetTest()">
+    <button
+      mat-raised-button
+      color="accent"
+      class="float-right"
+      (click)="resetTest()"
+    >
       Cancel
     </button>
   </div>
+  <!-- end: Input box -->
 </div>
