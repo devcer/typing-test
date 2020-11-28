@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   showStartButton = true;
   currentWordIndex = 0;
   currentTypingWord = '';
-  spaceKeyEntered = true;
+  spaceKeyEntered = false;
   typedText = new FormControl('');
   paragraphElements: any = [];
 
@@ -70,37 +70,41 @@ export class HomeComponent implements OnInit {
     this.showStartButton = false;
   }
   calculateScore(): number {
-    const inputText = this.typedText.value;
+    const inputText = this.typedText.value.trim();
     let score = 0;
     inputText.split(' ').forEach((word: string, index: number) => {
       const expectedWord = this.stringArr[index].trim();
       const didWordsMatch = expectedWord === word;
       // Uncomment for logging purpose
-      // console.log(
-      //   `expectedWord: ${expectedWord} realWord: ${word} didWordsMatch: ${didWordsMatch}`
-      // );
+      console.log(
+        `expectedWord: ${expectedWord} realWord: ${word} didWordsMatch: ${didWordsMatch}`
+      );
       if (didWordsMatch) {
         score += 10;
       } else {
-        score -= 10;
+        score -= 5;
       }
     });
     return score;
   }
   onInputKeyDown(ev: KeyboardEvent): void {
-    const isSpaceKey = ev.code === 'Space';
-    const isDeleteKey = ev.code === 'Backspace';
-    if (isDeleteKey) {
-      // Don't allow backspace key
+    const isSpaceKey = ev.which === 32;
+
+    if (this.spaceKeyEntered && isSpaceKey) {
+      // Do not allow the next space key
       ev.preventDefault();
       ev.stopPropagation();
     } else if (isSpaceKey) {
       // if Space key then highlight the next word
-      this.currentWordIndex += 1;
+      this.spaceKeyEntered = true;
+      this.currentWordIndex = this.typedText.value.split(' ').length - 1;
       this.paragraphElements[this.currentWordIndex].scrollIntoView({
         behaviour: 'smooth',
         block: 'center',
       });
+    } else {
+      this.currentWordIndex = this.typedText.value.split(' ').length - 1;
+      this.spaceKeyEntered = false;
     }
     // if there are fewer than 50 new words then repeat the words again.
     if (this.paragraphElements.length - this.currentWordIndex < 50) {
@@ -110,7 +114,7 @@ export class HomeComponent implements OnInit {
   resetTest(): void {
     this.showStartButton = true;
     this.typedText.enable();
-    this.typedText.reset();
+    this.typedText.reset('');
     this.score = 0;
     this.currentWordIndex = 0;
     this.stringArr = [];

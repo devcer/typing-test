@@ -28,7 +28,7 @@
     "@angular/platform-browser-dynamic": "~11.0.1",
     "@angular/router": "~11.0.1",
     "ngx-countdown": "^11.0.0",
-    "ngx-span-of-strings": "0.0.2",
+    "ngx-span-of-strings": "0.0.3",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.10.1",
     "tslib": "^2.0.0",

@@ -6,8 +6,9 @@
 }
 
 .typing-form {
-  min-width: 700px;
+  min-width: min(700px, 100vw);
   width: 100%;
+  margin: 5px;
 }
 
 .typing-full-width {
@@ -27,4 +28,10 @@
 
 .count-down {
   font-size: 48px;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 5px;
+  }
 }
